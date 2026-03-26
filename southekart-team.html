@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>South Ekart — IT Field Engineers</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --surface2: #eeecea;
+  --ink: #1a1814;
+  --ink2: #6b6760;
+  --accent: #e85d26;
+  --accent2: #2563eb;
+  --green: #16a34a;
+  --amber: #d97706;
+  --border: #ddd9d3;
+  --card-shadow: 0 2px 16px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--ink);
+  color: #fff;
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.header-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.live-dot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #4ade80;
+  font-weight: 500;
+}
+.live-dot::before {
+  content:'';
+  width:7px; height:7px;
+  border-radius:50%;
+  background:#4ade80;
+  animation: blink 1.8s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── HERO STRIP ── */
+.hero-strip {
+  background: var(--accent);
+  padding: 48px 48px 0;
+  overflow: hidden;
+  position: relative;
+}
+.hero-strip::after {
+  content: 'EKART';
+  position: absolute;
+  right: -20px; top: -10px;
+  font-size: 9rem;
+  font-weight: 800;
+  color: rgba(255,255,255,0.08);
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  line-height: 1;
+}
+.hero-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 10px;
+}
+.hero-title {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+.hero-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 400;
+  margin-bottom: 32px;
+}
+.hero-stats {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin: 0 -48px;
+  padding: 0 48px;
+}
+.hero-stat {
+  padding: 18px 32px 18px 0;
+  margin-right: 32px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.55);
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+}
+
+/* ── TOOLBAR ── */
+.toolbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 64px;
+  z-index: 90;
+}
+.search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+  max-width: 340px;
+}
+.search-wrap svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink2);
+}
+.search-input {
+  width: 100%;
+  padding: 9px 12px 9px 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.87rem;
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent); }
+
+.filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-btn {
+  padding: 7px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-left: auto;
+}
+.view-btn {
+  padding: 7px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.15s;
+  color: var(--ink2);
+}
+.view-btn.active { background: var(--ink); color: #fff; }
+
+/* ── MAIN CONTENT ── */
+.main {
+  padding: 32px 48px 60px;
+}
+.results-label {
+  font-size: 0.8rem;
+  color: var(--ink2);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* ── GRID VIEW ── */
+.engineers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.eng-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.22s, box-shadow 0.22s;
+  cursor: pointer;
+  animation: cardIn 0.4s ease both;
+}
+.eng-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-top {
+  padding: 24px 24px 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+}
+
+.avatar {
+  width: 54px; height: 54px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.card-identity { flex: 1; }
+.eng-name {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+}
+.eng-role {
+  font-size: 0.78rem;
+  color: var(--ink2);
+  font-weight: 500;
+}
+.eng-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--ink2);
+  margin-top: 3px;
+}
+
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.status-active   { background: #dcfce7; color: #15803d; }
+.status-standby  { background: #fef3c7; color: #92400e; }
+.status-offsite  { background: #dbeafe; color: #1d4ed8; }
+
+.card-body { padding: 16px 24px 20px; }
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
+}
+.info-icon { font-size: 0.9rem; margin-top: 1px; flex-shrink: 0; width: 18px; }
+.info-label { color: var(--ink2); font-weight: 500; min-width: 56px; flex-shrink: 0; }
+.info-val { color: var(--ink); font-weight: 400; }
+
+.locations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.loc-tag {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 3px 9px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.loc-tag::before { content: '📍'; font-size: 0.65rem; }
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 4px;
+}
+.skill-tag {
+  padding: 3px 9px;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.card-footer {
+  border-top: 1px solid var(--border);
+  padding: 12px 24px;
+  display: flex;
+  gap: 8px;
+}
+.contact-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--ink2);
+  font-weight: 500;
+  padding: 5px 10px;
+  background: var(--bg);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s;
+}
+.contact-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── LIST VIEW ── */
+.engineers-list { display: flex; flex-direction: column; gap: 10px; }
+.list-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 24px;
+  display: grid;
+  grid-template-columns: 44px 1fr 1.2fr 1fr 0.8fr auto;
+  gap: 16px;
+  align-items: center;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.18s;
+  animation: cardIn 0.3s ease both;
+}
+.list-row:hover { transform: translateX(3px); }
+.list-avatar {
+  width: 40px; height: 40px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+}
+.list-name { font-size: 0.9rem; font-weight: 700; }
+.list-role { font-size: 0.77rem; color: var(--ink2); margin-top: 1px; }
+.list-locs { display: flex; flex-wrap: wrap; gap: 4px; }
+.list-contact { font-size: 0.78rem; color: var(--ink2); }
+.list-shift { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--ink2); }
+
+/* ── EMPTY ── */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--ink2);
+}
+.empty-state h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+.empty-state p { font-size: 0.87rem; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header, .toolbar, .main, .hero-strip { padding-left: 20px; padding-right: 20px; }
+  .hero-strip::after { display: none; }
+  .engineers-grid { grid-template-columns: 1fr; }
+  .list-row { grid-template-columns: 40px 1fr auto; }
+  .list-locs, .list-contact, .list-shift { display: none; }
+  .view-toggle { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    South Ekart &nbsp;<span style="color:rgba(255,255,255,0.35);font-weight:400">/ IT Field Engineers</span>
+  </div>
+  <div class="header-right">
+    <span class="header-badge">Internal Directory</span>
+    <span class="live-dot">Live</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <div class="hero-label">South Ekart — IT SD Team</div>
+  <div class="hero-title">Field Engineer Directory</div>
+  <div class="hero-sub">Roles, responsibilities & location coverage across Ekart hubs</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-num" id="total-count">8</div><div class="hero-stat-label">Engineers</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">12</div><div class="hero-stat-label">Ekart Locations</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Specialisations</div></div>
+    <div class="hero-stat"><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Coverage</div></div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="search-input" id="searchInput" placeholder="Search engineer, location, skill…" oninput="filterCards()" />
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+    <button class="filter-btn" onclick="setFilter('Network', this)">Network</button>
+    <button class="filter-btn" onclick="setFilter('Hardware', this)">Hardware</button>
+    <button class="filter-btn" onclick="setFilter('Software', this)">Software</button>
+    <button class="filter-btn" onclick="setFilter('Active', this)">🟢 Active</button>
+    <button class="filter-btn" onclick="setFilter('Standby', this)">🟡 Standby</button>
+  </div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid">⊞</button>
+    <button class="view-btn" id="listBtn" onclick="setView('list')" title="List">☰</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="results-label" id="resultsLabel">Showing 8 engineers</div>
+  <div class="engineers-grid" id="engineersContainer"></div>
+</div>
+
+<script>
+const ENGINEERS = [
+  {
+    id: 'ENG-001',
+    name: 'Arjun Krishnamurthy',
+    initials: 'AK',
+    color: '#e85d26',
+    role: 'Senior Field Engineer',
+    designation: 'L3 – Infrastructure',
+    status: 'Active',
+    shift: '06:00 – 14:00',
+    phone: '+91 98410 11001',
+    email: 'arjun.k@southekart.in',
+    locations: ['Chennai Hub – Ambattur', 'Chennai Hub – Perungudi', 'Kancheepuram DC'],
+    specialisation: 'Network',
+    skills: ['Cisco Routing', 'Firewall Mgmt', 'MPLS', 'VPN'],
+    responsibilities: 'Primary network infra owner for North Chennai cluster. Handles ISP escalations, core switch configurations, and DC uptime SLAs.'
+  },
+  {
+    id: 'ENG-002',
+    name: 'Divya Raghunathan',
+    initials: 'DR',
+    color: '#2563eb',
+    role: 'Field Engineer',
+    designation: 'L2 – End User Computing',
+    status: 'Active',
+    shift: '09:00 – 18:00',
+    phone: '+91 98411 22002',
+    email: 'divya.r@southekart.in',
+    locations: ['Chennai Hub – Sholinganallur', 'Chengalpattu Spoke'],
+    specialisation: 'Hardware',
+    skills: ['Laptop Imaging', 'Printer Setup', 'Asset Mgmt', 'Windows OS'],
+    responsibilities: 'End-user device lifecycle — provisioning, imaging, and decommissioning for South Chennai locations. IMAC requests owner.'
+  },
+  {
+    id: 'ENG-003',
+    name: 'Karthik Subramanian',
+    initials: 'KS',
+    color: '#16a34a',
+    role: 'Field Engineer',
+    designation: 'L2 – Network',
+    status: 'Active',
+    shift: '14:00 – 22:00',
+    phone: '+91 98412 33003',
+    email: 'karthik.s@southekart.in',
+    locations: ['Coimbatore Hub', 'Tiruppur Spoke', 'Erode DC'],
+    specialisation: 'Network',
+    skills: ['LAN/WAN', 'WiFi 6', 'VLAN Config', 'Structured Cabling'],
+    responsibilities: 'Covers West Tamil Nadu cluster. Responsible for WAN link health, Wi-Fi access point management, and field incident response.'
+  },
+  {
+    id: 'ENG-004',
+    name: 'Priya Shanmugam',
+    initials: 'PS',
+    color: '#7c3aed',
+    role: 'Systems Engineer',
+    designation: 'L3 – Software & Systems',
+    status: 'Active',
+    shift: '09:00 – 18:00',
+    phone: '+91 98413 44004',
+    email: 'priya.s@southekart.in',
+    locations: ['Chennai Hub – Ambattur', 'Chennai Hub – Perungudi'],
+    specialisation: 'Software',
+    skills: ['Linux Admin', 'Python Scripting', 'ERP Support', 'ITSM Tools'],
+    responsibilities: 'Application-layer support for warehouse management and ERP systems. Automates routine IT ops tasks and owns ITSM toolchain for the Chennai cluster.'
+  },
+  {
+    id: 'ENG-005',
+    name: 'Ramesh Venkataraman',
+    initials: 'RV',
+    color: '#0891b2',
+    role: 'Field Engineer',
+    designation: 'L2 – Hardware',
+    status: 'Standby',
+    shift: '22:00 – 06:00',
+    phone: '+91 98414 55005',
+    email: 'ramesh.v@southekart.in',
+    locations: ['Madurai Hub', 'Dindigul Spoke', 'Virudhunagar DC'],
+    specialisation: 'Hardware',
+    skills: ['Server Hardware', 'CCTV Systems', 'UPS/Power', 'Rack Mgmt'],
+    responsibilities: 'Night-shift coverage for South TN cluster. Handles server hardware faults, CCTV/surveillance systems, and UPS maintenance SLAs.'
+  },
+  {
+    id: 'ENG-006',
+    name: 'Suresh Balakrishnan',
+    initials: 'SB',
+    color: '#db2777',
+    role: 'Field Engineer',
+    designation: 'L2 – Network & Comms',
+    status: 'Active',
+    shift: '06:00 – 14:00',
+    phone: '+91 98415 66006',
+    email: 'suresh.b@southekart.in',
+    locations: ['Trichy Hub', 'Thanjavur Spoke', 'Kumbakonam DC'],
+    specialisation: 'Network',
+    skills: ['SD-WAN', 'VoIP', 'Leased Line', 'CCTV Networking'],
+    responsibilities: 'Central TN cluster network owner. Manages SD-WAN links, VoIP PBX, and inter-site connectivity for 3 Ekart hubs.'
+  },
+  {
+    id: 'ENG-007',
+    name: 'Meena Balasubramanian',
+    initials: 'MB',
+    color: '#ea580c',
+    role: 'Junior Field Engineer',
+    designation: 'L1 – End User Support',
+    status: 'Active',
+    shift: '09:00 – 18:00',
+    phone: '+91 98416 77007',
+    email: 'meena.b@southekart.in',
+    locations: ['Salem Hub', 'Namakkal Spoke'],
+    specialisation: 'Hardware',
+    skills: ['Desktop Support', 'Ticketing', 'Basic Networking', 'iOS/Android MDM'],
+    responsibilities: 'First-responder for Salem cluster incidents. Handles L1 tickets, MDM device enrolment, and consumables/asset tracking.'
+  },
+  {
+    id: 'ENG-008',
+    name: 'Vijay Annamalai',
+    initials: 'VA',
+    color: '#059669',
+    role: 'Senior Field Engineer',
+    designation: 'L3 – Cloud & Infra',
+    status: 'Standby',
+    shift: '14:00 – 22:00',
+    phone: '+91 98417 88008',
+    email: 'vijay.a@southekart.in',
+    locations: ['Chennai Hub – Sholinganallur', 'Chengalpattu Spoke', 'Kancheepuram DC'],
+    specialisation: 'Software',
+    skills: ['AWS', 'Azure AD', 'Backup Systems', 'Monitoring – Zabbix'],
+    responsibilities: 'Cloud infrastructure lead for South cluster. Manages Azure AD, cloud backup policies, Zabbix monitoring, and escalation bridge to central IT.'
+  }
+];
+
+let currentFilter = 'all';
+let currentView = 'grid';
+let currentSearch = '';
+
+function statusClass(s) {
+  if (s === 'Active') return 'status-active';
+  if (s === 'Standby') return 'status-standby';
+  return 'status-offsite';
+}
+
+function renderGrid(data) {
+  return data.map((e, i) => `
+    <div class="eng-card" style="animation-delay:${i * 0.06}s" data-id="${e.id}">
+      <div class="card-top">
+        <div class="avatar" style="background:${e.color}">${e.initials}</div>
+        <div class="card-identity">
+          <div class="eng-name">${e.name}</div>
+          <div class="eng-role">${e.role} &bull; ${e.designation}</div>
+          <div class="eng-id">${e.id}</div>
+        </div>
+        <span class="status-badge ${statusClass(e.status)}">${e.status}</span>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <span class="info-icon">🕐</span>
+          <span class="info-label">Shift</span>
+          <span class="info-val" style="font-family:'JetBrains Mono',monospace;font-size:0.8rem">${e.shift}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">📍</span>
+          <span class="info-label">Locations</span>
+          <div>
+            <div class="locations-list">${e.locations.map(l => `<span class="loc-tag">${l}</span>`).join('')}</div>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">🔧</span>
+          <span class="info-label">Skills</span>
+          <div class="skills-list">${e.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}</div>
+        </div>
+        <div class="info-row" style="margin-bottom:0">
+          <span class="info-icon">📋</span>
+          <span class="info-label">Role</span>
+          <span class="info-val" style="color:var(--ink2);font-size:0.78rem;line-height:1.5">${e.responsibilities}</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a class="contact-chip" href="tel:${e.phone}">📞 ${e.phone}</a>
+        <a class="contact-chip" href="mailto:${e.email}">✉️ ${e.email.split('@')[0]}</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderList(data) {
+  const header = `
+    <div style="display:grid;grid-template-columns:44px 1fr 1.2fr 1fr 0.8fr auto;gap:16px;padding:0 24px 8px;font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink2);">
+      <div></div><div>Engineer</div><div>Locations</div><div>Contact</div><div>Shift</div><div>Status</div>
+    </div>`;
+  return header + data.map((e, i) => `
+    <div class="list-row" style="animation-delay:${i * 0.04}s">
+      <div class="list-avatar" style="background:${e.color}">${e.initials}</div>
+      <div>
+        <div class="list-name">${e.name}</div>
+        <div class="list-role">${e.role}</div>
+      </div>
+      <div class="list-locs">${e.locations.slice(0,2).map(l => `<span class="loc-tag">${l}</span>`).join('')}${e.locations.length > 2 ? `<span class="loc-tag">+${e.locations.length-2}</span>` : ''}</div>
+      <div class="list-contact">${e.phone}<br/><span style="font-size:0.72rem">${e.email}</span></div>
+      <div class="list-shift">${e.shift}</div>
+      <span class="status-badge ${statusClass(e.status)}">${e.status}</span>
+    </div>
+  `).join('');
+}
+
+function getFiltered() {
+  return ENGINEERS.filter(e => {
+    const q = currentSearch.toLowerCase();
+    const matchSearch = !q || e.name.toLowerCase().includes(q)
+      || e.locations.some(l => l.toLowerCase().includes(q))
+      || e.skills.some(s => s.toLowerCase().includes(q))
+      || e.role.toLowerCase().includes(q)
+      || e.id.toLowerCase().includes(q);
+    const matchFilter = currentFilter === 'all'
+      || e.specialisation === currentFilter
+      || e.status === currentFilter;
+    return matchSearch && matchFilter;
+  });
+}
+
+function render() {
+  const data = getFiltered();
+  const container = document.getElementById('engineersContainer');
+  const label = document.getElementById('resultsLabel');
+
+  label.textContent = `Showing ${data.length} engineer${data.length !== 1 ? 's' : ''}`;
+
+  if (data.length === 0) {
+    container.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><h3>No engineers found</h3><p>Try a different search or filter.</p></div>`;
+    return;
+  }
+
+  if (currentView === 'grid') {
+    container.className = 'engineers-grid';
+    container.innerHTML = renderGrid(data);
+  } else {
+    container.className = 'engineers-list';
+    container.innerHTML = renderList(data);
+  }
+}
+
+function filterCards() {
+  currentSearch = document.getElementById('searchInput').value;
+  render();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+  document.getElementById('listBtn').classList.toggle('active', v === 'list');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

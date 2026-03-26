@@ -1,226 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flipkart IT SD Team Dashboard</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+}
+
+header {
+  background: #111;
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.container {
+  padding: 20px;
+}
+
+.search {
+  margin-bottom: 15px;
+}
+
+input {
+  padding: 8px;
+  width: 250px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.role {
+  color: gray;
+  font-size: 13px;
+}
+
+.tag {
+  display: inline-block;
+  background: #e3f2fd;
+  padding: 3px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>South IT Service Delivery Team</header>
+
+<div class="container">
+
+<input type="text" id="search" placeholder="Search..." onkeyup="filterData()" />
+
+<div id="list"></div>
+
+</div>
+
+<script>
+
 const ENGINEERS = [
   {
-    id: 'EMP-81478',
-    name: 'Pokuri Anil',
-    initials: 'PA',
-    color: '#e85d26',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9700594177',
-    email: 'anil.pokuri@flipkart.com',
-    locations: ['Vijayawada Grocery & LDC', 'Vizag-Grocery', 'Vizag LDC BTS', 'Vijayawada FSC'],
-    specialisation: 'Network',
-    skills: ['IT Support', 'Service Delivery', 'Infra Management'],
-    responsibilities: 'IT SPOC for designated locations including Vijayawada and Vizag hubs.'
+    name: "Mani N",
+    role: "Senior Manager - Service Delivery",
+    location: "Bangalore ETV Office",
+    phone: "+91 9500160607"
   },
   {
-    id: 'EMP-80282',
-    name: 'Jayaprakash P',
-    initials: 'JP',
-    color: '#2563eb',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9003624529',
-    email: 'jayaprakash.p@flipkart.com',
-    locations: ['Hubil Grocery', 'Hubli LDC', 'Hosur BTS LDC'],
-    specialisation: 'Hardware',
-    skills: ['Hardware Support', 'Asset Mgmt', 'End User Computing'],
-    responsibilities: 'IT SPOC for Hubli and Hosur locations.'
+    name: "Pokuri Anil",
+    role: "Senior Engineer",
+    location: "Vijayawada / Vizag",
+    phone: "+91 9700594177"
   },
   {
-    id: 'EMP-80286',
-    name: 'Karthikeyan K',
-    initials: 'KK',
-    color: '#16a34a',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 8870951950',
-    email: 'k.karthikeyan@flipkart.com',
-    locations: ['Coimbatore Grocery FC', 'Coimbatore Large BTS', 'Coimbatore FSC', 'RO'],
-    specialisation: 'Network',
-    skills: ['LAN/WAN', 'Structured Cabling', 'ITSM'],
-    responsibilities: 'IT SPOC covering Coimbatore locations and the Regional Office.'
+    name: "Jayaprakash P",
+    role: "Senior Engineer",
+    location: "Hubli / Hosur",
+    phone: "+91 9003624529"
   },
   {
-    id: 'EMP-115490',
-    name: 'Kamalakannan T',
-    initials: 'KT',
-    color: '#7c3aed',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9003922009',
-    email: 'kamalakannan.t@flipkart.com',
-    locations: ['Chennai Grocery Polytrustions', 'Chennai Alamathi LDC', 'Chennai FSC', 'TN-Grocery-XD'],
-    specialisation: 'Software',
-    skills: ['Software Support', 'Systems Administration', 'Ticketing'],
-    responsibilities: 'Primary IT SPOC for Chennai Grocery and FSC locations.'
+    name: "Karthikeyan K",
+    role: "Senior Engineer",
+    location: "Coimbatore",
+    phone: "+91 8870951950"
   },
   {
-    id: 'EMP-104631',
-    name: 'Karthik Patturasu',
-    initials: 'KP',
-    color: '#0891b2',
-    role: 'Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9787874795',
-    email: 'karthik.p@flipkart.com',
-    locations: ['Anjaneya MH'],
-    specialisation: 'Hardware',
-    skills: ['Server Hardware', 'UPS/Power', 'CCTV Systems'],
-    responsibilities: 'Field engineer responsible for Bangalore Narsapura and Anjaneya MH.'
+    name: "Kamalakannan T",
+    role: "Senior Engineer",
+    location: "Chennai",
+    phone: "+91 9003922009"
   },
   {
-    id: 'EMP-111947',
-    name: 'Mani N',
-    initials: 'MN',
-    color: '#db2777',
-    role: 'Senior Manager - Service Delivery',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9500160607',
-    email: 'mani.n@flipkart.com',
-    locations: ['Bangalore ETV Office'],
-    specialisation: 'Software',
-    skills: ['Service Delivery', 'Team Leadership', 'Vendor Mgmt'],
-    responsibilities: 'Senior management and service delivery oversight.'
-  },
-  {
-    id: 'EMP-80297',
-    name: 'P.Nethaji',
-    initials: 'PN',
-    color: '#ea580c',
-    role: 'Assistant Manager - Service Delivery',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9500044335',
-    email: 'nethaji.p@flipkart.com',
-    locations: ['Chennai Regional Office'],
-    specialisation: 'Network',
-    skills: ['Service Delivery', 'IT Operations'],
-    responsibilities: 'Assistant Manager based in the Chennai Regional Office.'
-  },
-  {
-    id: 'EMP-82621',
-    name: 'Prashanth Hosad',
-    initials: 'PH',
-    color: '#059669',
-    role: 'Assistant Manager - Service Delivery',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 7337805237',
-    email: 'prashanth.h@flipkart.com',
-    locations: ['Bangalore ETV Office'],
-    specialisation: 'Software',
-    skills: ['Service Delivery', 'IT Operations'],
-    responsibilities: 'Assistant Manager based in the Bangalore Embassy Tech Village.'
-  },
-  {
-    id: 'EMP-81519',
-    name: 'Raja Praveen Kumar V',
-    initials: 'RP',
-    color: '#e85d26',
-    role: 'Lead',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9985533224',
-    email: 'rajapraveen.v@flipkart.com',
-    locations: ['SGR-LDC', 'Hyderabad MH', 'Hyderabad FSC', 'HYD PTC HBD Myntra'],
-    specialisation: 'Hardware',
-    skills: ['Team Lead', 'Infra Deployments', 'Site Setup'],
-    responsibilities: 'IT Lead covering Hyderabad and surrounding facilities.'
-  },
-  {
-    id: 'EMP-81044',
-    name: 'Sandeep Gode',
-    initials: 'SG',
-    color: '#2563eb',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9160544525',
-    email: 'sandeep.gode@flipkart.com',
-    locations: ['HYD-Grocery 1PL', 'HYD-RO'],
-    specialisation: 'Network',
-    skills: ['End User Support', 'Network Troubleshooting'],
-    responsibilities: 'IT SPOC for Hyderabad Grocery and RO locations.'
-  },
-  {
-    id: 'EMP-82643',
-    name: 'Binu A Baby',
-    initials: 'BB',
-    color: '#16a34a',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9895060750',
-    email: 'binu.baby@flipkart.com',
-    locations: ['Malur BTS FSC', 'Malur 01 FSC'],
-    specialisation: 'Hardware',
-    skills: ['Hardware Break/Fix', 'Asset Mgmt'],
-    responsibilities: 'IT SPOC dedicated to Malur Bangalore facilities.'
-  },
-  {
-    id: 'EMP-98382',
-    name: 'Faiyaz Ahmad',
-    initials: 'FA',
-    color: '#7c3aed',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9471270601',
-    email: 'faiyaz.ahmad@flipkart.com',
-    locations: ['Anekal Grocery FC (RKV)', 'BLR-Hyperlocal DS', 'BLR-Grocery-XD'],
-    specialisation: 'Network',
-    skills: ['Connectivity', 'IT Support'],
-    responsibilities: 'IT SPOC for Anekal and Bangalore Grocery facilities.'
-  },
-  {
-    id: 'EMP-80505',
-    name: 'Sridhar V',
-    initials: 'SV',
-    color: '#0891b2',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 7026200165',
-    email: 'sridhar.v@flipkart.com',
-    locations: ['Hubli FSC', 'BLR FPS Office', 'ETV Office'],
-    specialisation: 'Software',
-    skills: ['System Support', 'Client Services'],
-    responsibilities: 'IT SPOC covering Hubli FSC and BLR office locations.'
-  },
-  {
-    id: 'EMP-82935',
-    name: 'T S Ibrahim',
-    initials: 'TI',
-    color: '#db2777',
-    role: 'Senior Engineer',
-    designation: 'IT',
-    status: 'Active',
-    shift: '09:00 – 18:00',
-    phone: '+91 9500172244',
-    email: 'ts.ibrahim@flipkart.com',
-    locations: ['Soukya MH', 'NWW Myntra FC', 'Whitefield 1 NL Myntra FC'],
-    specialisation: 'Hardware',
-    skills: ['Warehouse IT', 'Printers/Scanners', 'Network Setup'],
-    responsibilities: 'IT SPOC for Mother Hubs in Bangalore (Soukya Road & Whitefield).'
+    name: "Prashanth Hosad",
+    role: "Assistant Manager",
+    location: "Bangalore",
+    phone: "+91 7337805237"
   }
 ];
+
+function render(data) {
+  let html = "";
+  data.forEach(e => {
+    html += `
+      <div class="card">
+        <div class="name">${e.name}</div>
+        <div class="role">${e.role}</div>
+        <div class="tag">${e.location}</div>
+        <div class="tag">📞 ${e.phone}</div>
+      </div>
+    `;
+  });
+  document.getElementById("list").innerHTML = html;
+}
+
+function filterData() {
+  let q = document.getElementById("search").value.toLowerCase();
+  let filtered = ENGINEERS.filter(e =>
+    e.name.toLowerCase().includes(q) ||
+    e.location.toLowerCase().includes(q)
+  );
+  render(filtered);
+}
+
+render(ENGINEERS);
+
+</script>
+
+</body>
+</html>
